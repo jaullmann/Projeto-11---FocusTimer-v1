@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Temporizador web estilo contemporâneo">
+  <title>Focus Timer Contemporâneo</title>
+
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./src/main.js" defer></script>
+</head>
+<body>
+  <div id="app">
+
+    <section id="timer">
+
+      <div id="timer-display">
+        <span id="minutes">25</span>
+        <span>:</span>
+        <span id="seconds">00</span>
+      </div> 
+
+      <div id="timer-controls">
+
+        <button
+        id="play-button"
+        data-action="timerPlay"
+        class="ph ph-play-circle">
+          <span class="sr-only">Iniciar Temporizador</span>
+        </button> 
+
+        <button
+        id="pause-button"
+        data-action="timerPause"
+        class="ph ph-pause-circle hide">
+          <span class="sr-only">Pausar Temporizador</span>
+        </button>
+
+        <button
+        data-action="timerStop"
+        class="ph ph-stop-circle">
+          <span class="sr-only">Pausar Temporizador</span>
+        </button>
+
+        <button
+        data-action="volumeTurnUp"
+        class="ph ph-plus-circle">
+          <span class="sr-only">Aumentar volume</span>
+        </button>
+
+        <button
+        data-action="volumeTurnDown"
+        class="ph ph-minus-circle">
+          <span class="sr-only">Diminuir volume</span>            
+        </button>
+
+      </div>      
+
+    </section>
+ 
+    <section id="sound-controls">
+
+      <div id="forest-box" class="sound-selector">
+        <button
+        data-action="toggleForestSound"
+        class="ph ph-tree-evergreen">
+          <span class="sr-only">Reproduzir som de floresta</span>
+        </button> 
+      </div>
+
+      <div id="rain-box" class="sound-selector">
+        <button 
+        data-action="toggleRainSound"
+        class="ph ph-cloud-rain">
+          <span class="sr-only">Reproduzir som de chuva</span>
+        </button> 
+      </div>
+
+      <div id="coffeshop-box" class="sound-selector">
+        <button
+        data-action="toogleCoffeshopSound"
+        class="ph ph-storefront">
+          <span class="sr-only">Reproduzir som de cafeteria</span>
+        </button> 
+      </div>
+
+      <div id="fireplace-box" class="sound-selector">
+        <button
+        data-action="toogleFireplaceSound"
+        class="ph ph-campfire selected-sound-box">
+          <span class="sr-only">Reproduzir som de lareira</span>
+        </button> 
+      </div>
+
+    </section>    
+  </div>  
+</body>
+</html>
