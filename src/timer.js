@@ -5,12 +5,14 @@ export class Timer {
     constructor(        
         timerMinutesDisplay = el.timerDisplay.minutesDisplay,
         timerSecondsDisplay = el.timerDisplay.secondsDisplay,
+        timerDisplay = el.timerDisplay.timerDisplay,
         controlsPanel = el.timerControls.controlsPanel,
         playButton = el.timerControls.playButton,
         pauseButton = el.timerControls.pauseButton
         ) {
             this.timerMinutesDisplay = timerMinutesDisplay;
             this.timerSecondsDisplay = timerSecondsDisplay;
+            this.timerDisplay = timerDisplay;
             this.controlsPanel = controlsPanel;
             this.playButton = playButton;
             this.pauseButton = pauseButton;
@@ -23,22 +25,28 @@ export class Timer {
         this.controlsPanel.addEventListener('click', (event) => {
             const action = event.target.dataset.action
             if(typeof this[action] != "function") {
+                console.log(`Sem ação selecionada`)
                 return
             }
             this[action]()
             console.log(`Ação selecionada: ${action}`)
             return                   
         })
+        this.timerDisplay.addEventListener('click', (event) => {
+            if (event.target.id == 'minutes') {
+                this.setTimer()
+            }
+        })        
     }
 
-    set = () => {
+    setTimer = () => {        
         this.timerMinutesDisplay.setAttribute('contenteditable', true)
         this.timerMinutesDisplay.focus()
     }
 
     setMinutes = () => {
-        this.timerMinutesDisplay.addEventListener('focus', () => {            
-            this.timerMinutesDisplay.textContent = ""            
+        this.timerMinutesDisplay.addEventListener("focus", () => {            
+            this.timerMinutesDisplay.textContent = ""
         })
         
         this.timerMinutesDisplay.onkeypress = (event) => /\d/.test(event.key)
@@ -46,15 +54,20 @@ export class Timer {
         this.timerMinutesDisplay.addEventListener('blur', (event) => {
             
             let time = event.currentTarget.textContent
+            time = time == 0 ? state.minutes : time
             time = time > 60 ? 60 : time
-            state.minutes = time
-            state.seconds = 0
+            this.currentMinute = time
+            this.currentSecond = 0
 
             this.updateDisplay()
             this.timerMinutesDisplay.removeAttribute('contenteditable')
         })
     }
 
+    updateDisplay = () => {
+        this.timerMinutesDisplay.textContent = String(this.currentMinute).padStart(2, "0")
+        this.timerSecondsDisplay.textContent = String(this.currentSecond).padStart(2, "0")
+    }
 
     timerDisplayCountdown = () => { 
         if (!state.isRunning || state.isOver) {
@@ -78,15 +91,10 @@ export class Timer {
             return
         }        
         
-        this.updateDisplay(this.currentMinute, this.currentSecond)
+        this.updateDisplay()
 
         setTimeout(() => this.timerDisplayCountdown(), 1000)
-    }
-
-    updateDisplay = () => {
-        this.timerMinutesDisplay.textContent = String(this.currentMinute).padStart(2, "0")
-        this.timerSecondsDisplay.textContent = String(this.currentSecond).padStart(2, "0")
-    }
+    }    
 
     timerPlay = () => {
         state.isRunning = true
@@ -107,7 +115,7 @@ export class Timer {
         state.isRunning = false
         state.isOver = true
         this.playButton.classList.remove('hide')
-        this.pauseButton.classList.add('hide')
+        this.pauseButton.classList.add('hide')        
         this.timerReset()
         return        
     }   

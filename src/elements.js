@@ -9,11 +9,12 @@ export const soundControls = {
 
 export const timerDisplay = {
     minutesDisplay: document.getElementById("minutes"),
-    secondsDisplay: document.getElementById("seconds")
+    secondsDisplay: document.getElementById("seconds"),
+    timerDisplay: document.getElementById("timer-display"),
 }
 
-export const timerControls = {
-    controlsPanel: document.getElementById("timer-controls"),
+export const timerControls = {    
+    controlsPanel: document.getElementById("timer-controls"),    
     playButton: document.getElementById("play-button"),
     pauseButton: document.getElementById("pause-button")
 }

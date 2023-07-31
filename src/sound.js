@@ -106,6 +106,7 @@ export class Sound {
         try {
             this.stopAllSounds()
             this.untoggleAllBoxes()
+            this.currentSong = null
             return
         } 
         catch (TypeError) {
