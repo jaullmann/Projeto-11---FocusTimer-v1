@@ -16,7 +16,7 @@
     --btn-sound-bg-color: hsl(240, 9%, 89%);
     --btn-sound-bg-color-hover: hsl(240, 4%, 78%);
     --btn-sound-simb-color: hsl(240, 6%, 21%);
-    --btn-sound-checked-bg-color: hsl(194, 97%, 31%);
+    --btn-sound-checked-bg-color: hsl(194, 96%, 44%);
     --btn-sound-checked-simb-color: hsl(0, 0%, 100%);
     font-size: clamp(40%, 1% + 2vw, 62.5%);
     font-family:Arial, Helvetica, sans-serif;    
@@ -39,8 +39,8 @@ button {
 #app {
     display: flex;
     align-content: center;
-    justify-content: center;
-    gap: 19rem;
+    justify-content: center;   
+    gap: 15rem;
 }
 
 .sr-only {
@@ -75,12 +75,12 @@ button {
     font-size: 4.8rem;
     color: var(--txt-color);
     background-color: transparent;
-    transition: 0.2s;  
+    /* transition: 0.2s;   */
 }
 
 #timer-controls button:hover {    
     filter:opacity(60%);
-    transition: 0.2s;
+    /* transition: 0.2s; */
 }
 
 #sound-controls {
@@ -99,13 +99,13 @@ button {
     height: 15.2rem;
     border-radius: 2.4rem;
     background-color: var(--btn-sound-bg-color); 
-    transition: 0.3s; 
+    /* transition: 0.3s;  */
 }
 
 .sound-selector:hover {
     background-color: var(--btn-sound-bg-color-hover);
     cursor: pointer;
-    transition: 0.3s;    
+    /* transition: 0.3s;     */
 }
 
 .sound-selector button {
@@ -121,4 +121,12 @@ button {
 
 .hide {
     display: none;
+}
+
+@media(max-width: 900px) {
+    #app {        
+        flex-direction: column;
+        gap: 3rem;
+        ;
+    }
 }

@@ -8,6 +8,11 @@ fireplaceSound.loop = true
 forestSound.loop = true
 rainSound.loop = true
 
+coffeshopSound.volume = 0.3
+fireplaceSound.volume = 0.3
+forestSound.volume = 0.3
+rainSound.volume = 0.3
+
 export const files = {
     coffeshopSound: coffeshopSound,
     fireplaceSound: fireplaceSound,

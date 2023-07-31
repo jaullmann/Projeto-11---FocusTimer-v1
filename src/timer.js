@@ -14,11 +14,12 @@ export class Timer {
             this.controlsPanel = controlsPanel;
             this.playButton = playButton;
             this.pauseButton = pauseButton;
-            this.currentMinute = null;
-            this.currentSecond = null;
+            this.currentMinute = state.minutes;
+            this.currentSecond = state.seconds;
+            this.timeUpEvent = new CustomEvent("timeUp")
         }
 
-    registerActions = () => {
+    registerTimerActions = () => {
         this.controlsPanel.addEventListener('click', (event) => {
             const action = event.target.dataset.action
             if(typeof this[action] != "function") {
@@ -29,6 +30,31 @@ export class Timer {
             return                   
         })
     }
+
+    set = () => {
+        this.timerMinutesDisplay.setAttribute('contenteditable', true)
+        this.timerMinutesDisplay.focus()
+    }
+
+    setMinutes = () => {
+        this.timerMinutesDisplay.addEventListener('focus', () => {            
+            this.timerMinutesDisplay.textContent = ""            
+        })
+        
+        this.timerMinutesDisplay.onkeypress = (event) => /\d/.test(event.key)
+
+        this.timerMinutesDisplay.addEventListener('blur', (event) => {
+            
+            let time = event.currentTarget.textContent
+            time = time > 60 ? 60 : time
+            state.minutes = time
+            state.seconds = 0
+
+            this.updateDisplay()
+            this.timerMinutesDisplay.removeAttribute('contenteditable')
+        })
+    }
+
 
     timerDisplayCountdown = () => { 
         if (!state.isRunning || state.isOver) {
@@ -48,6 +74,7 @@ export class Timer {
             state.isRunning = false
             state.isOver = true
             this.timerReset()
+            document.dispatchEvent(this.timeUpEvent)
             return
         }        
         
@@ -57,8 +84,6 @@ export class Timer {
     }
 
     updateDisplay = () => {
-        // this.currentMinute = minutes ?? state.minutes
-        // this.currentSecond = seconds ?? state.seconds
         this.timerMinutesDisplay.textContent = String(this.currentMinute).padStart(2, "0")
         this.timerSecondsDisplay.textContent = String(this.currentSecond).padStart(2, "0")
     }
@@ -67,13 +92,15 @@ export class Timer {
         state.isRunning = true
         state.isOver = false        
         this.switchPlayPauseButtons()
-        this.timerDisplayCountdown()         
+        this.timerDisplayCountdown()        
+        return        
     }
 
     timerPause = () => {
         state.isRunning = false
         state.isOver = false 
         this.switchPlayPauseButtons()
+        return
     }
 
     timerStop = () => {
@@ -82,12 +109,13 @@ export class Timer {
         this.playButton.classList.remove('hide')
         this.pauseButton.classList.add('hide')
         this.timerReset()
+        return        
     }   
     
     timerReset = () => {
         this.currentMinute = state.minutes
         this.currentSecond = state.seconds
-        this.updateDisplay()
+        this.updateDisplay()        
         return
     }
 
