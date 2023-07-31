@@ -65,17 +65,17 @@ export class Sound {
         }
     }
      
-    toggleSoundSelected = (selectedSound, currentSoundControl) => {
+    toggleSoundSelected = (selectedSound, currentSoundControl) => {        
         try {
             if (selectedSound == this.currentSong) {            
                 this.currentSong = null
                 currentSoundControl.classList.remove('selected-box')
+                currentSoundControl.querySelector('button').setAttribute('style', 'color: default')                       
             } else {
-                this.currentSong = selectedSound              
-                for(let element in this.controls){
-                    this.controls[element].classList.remove('selected-box')
-                }
+                this.currentSong = selectedSound                              
+                this.untoggleAllBoxes()
                 currentSoundControl.classList.add('selected-box')
+                currentSoundControl.querySelector('button').setAttribute('style', 'color: white')              
             }
             this.stopAllSounds()
             if (state.isRunning){
@@ -88,9 +88,18 @@ export class Sound {
         }    
     }
 
-    untoggleAllBoxes = () => {
+    resetSoundElementColors = () => {
         for(let element in this.controls){
             this.controls[element].classList.remove('selected-box')
+            
+        }
+    }
+
+    untoggleAllBoxes = () => {
+        for(let element in this.controls){
+            this.resetSoundElementColors()
+            this.controls[element].classList.remove('selected-box')
+            this.controls[element].querySelector('button').setAttribute('style', 'color: default')
         }
     }
 

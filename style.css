@@ -11,13 +11,13 @@
 
 :root {
     --timer-hue: 240;
-    --bg-color: hsl(240, 0%, 100%);
-    --timer-color: hsl(240, 6%, 21%);
+    --bg-color: #ffffff;
+    --timer-color: #000000;
     --btn-sound-bg-color: hsl(240, 9%, 89%);
-    --btn-sound-bg-color-hover: hsl(240, 4%, 78%);
-    --btn-sound-simb-color: hsl(240, 6%, 21%);
-    --btn-sound-checked-bg-color: hsl(194, 96%, 44%);
-    --btn-sound-checked-simb-color: hsl(0, 0%, 100%);
+    --btn-sound-bg-color-hover: hsl(240, 1%, 67%);
+    --btn-sound-simb-color: #000000;
+    --btn-sound-checked-bg-color: hsl(194, 100%, 35%);
+    --btn-sound-checked-simb-color: #ffffff;
     font-size: clamp(40%, 1% + 2vw, 62.5%);
     font-family:Arial, Helvetica, sans-serif;    
 }
@@ -113,10 +113,19 @@ button {
     color: var(--btn-sound-simb-color);  
 }
 
+.sound-selector button:hover {
+    font-size: 7rem; 
+    color: white;  
+}
+
 .selected-box {       
     border-radius: 2.4rem;
     color: var(--btn-sound-checked-simb-color);
     background-color: var(--btn-sound-checked-bg-color);       
+}
+
+.selected-button {
+    color: #ffffff;
 }
 
 .hide {
