@@ -33,7 +33,7 @@ export class Timer {
             return                   
         })
         this.timerDisplay.addEventListener('click', (event) => {
-            if (event.target.id == 'minutes') {
+            if (event.target.id == 'minutes' && state.isOver) {
                 this.setTimer()
             }
         })        
@@ -86,7 +86,7 @@ export class Timer {
         if (this.currentMinute < 0) {
             state.isRunning = false
             state.isOver = true
-            this.timerReset()
+            this.switchPlayPauseButtons()
             document.dispatchEvent(this.timeUpEvent)
             return
         }        

@@ -75,12 +75,12 @@ button {
     font-size: 4.8rem;
     color: var(--txt-color);
     background-color: transparent;
-    /* transition: 0.2s;   */
+    transition: 0.2s;  
 }
 
 #timer-controls button:hover {    
     filter:opacity(60%);
-    /* transition: 0.2s; */
+    transition: 0.2s;
 }
 
 #sound-controls {
@@ -99,13 +99,13 @@ button {
     height: 15.2rem;
     border-radius: 2.4rem;
     background-color: var(--btn-sound-bg-color); 
-    /* transition: 0.3s;  */
+    transition: 0.3s; 
 }
 
 .sound-selector:hover {
     background-color: var(--btn-sound-bg-color-hover);
     cursor: pointer;
-    /* transition: 0.3s;     */
+    transition: 0.3s;    
 }
 
 .sound-selector button {

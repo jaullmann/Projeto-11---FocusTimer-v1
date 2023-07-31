@@ -29,6 +29,7 @@ export class Sound {
         })
         document.addEventListener('timeUp', (event) => {
             this.stopAllSounds()
+            this.untoggleAllBoxes()
         })        
     }
 
