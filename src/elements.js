@@ -1,3 +1,9 @@
+export const darkModeToggle = {
+    themeSelector: document.getElementById('display-mode'),
+    darkModeButton: document.getElementById('dark-mode-toggle'),
+    lightModeButton: document.getElementById('light-mode-toggle')
+}
+
 export const soundSection = document.getElementById("sound-controls")
 
 export const soundControls = {    

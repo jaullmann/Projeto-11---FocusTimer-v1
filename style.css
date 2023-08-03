@@ -2,32 +2,49 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
     /* border: 1px solid red; */
-
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;    
 }
 
 :root {
-    --timer-hue: 240;
     --bg-color: #ffffff;
-    --timer-color: #000000;
-    --btn-sound-bg-color: hsl(240, 9%, 89%);
-    --btn-sound-bg-color-hover: hsl(240, 1%, 67%);
-    --btn-sound-simb-color: #000000;
-    --btn-sound-checked-bg-color: hsl(194, 100%, 35%);
+    --timer-color: #323238;
+    --btn-timer-color: #323238;
+    --btn-sound-bg-color: #E1E1E6;
+    --btn-sound-bg-color-hover:#cacacc;
+    --btn-sound-simb-color: #323238;
+    --btn-sound-checked-bg-color: #02799D;
     --btn-sound-checked-simb-color: #ffffff;
+    --btn-sound-slider-color: #323238;
+    --btn-toggle-mode-display: #000000;
     font-size: clamp(40%, 1% + 2vw, 62.5%);
-    font-family:Arial, Helvetica, sans-serif;    
+    font-family: 'Roboto', sans-serif;    
+}
+
+.dark-mode {
+    --bg-color: #121214;
+    --timer-color: #FFFFFF;
+    --btn-timer-color: #C4C4CC;
+    --btn-sound-bg-color: #29292E;
+    --btn-sound-bg-color-hover:#38383f;
+    --btn-sound-simb-color: #C4C4CC;
+    --btn-sound-checked-bg-color: #0A3442;
+    --btn-sound-checked-simb-color: #FFFFFF;
+    --btn-sound-slider-color: #FFFFFF;
+    --btn-toggle-mode-display: #FFFFFF;
+    transition: 0.3s;
 }
 
 body {
     font-size: 1.6rem;
     height: 100vh;
-    
+
     display: grid;       
     place-content: center;    
+
+    background-color: var(--bg-color);
+    transition: 0.3s;
 }
 
 button {
@@ -40,7 +57,7 @@ button {
     display: flex;
     align-content: center;
     justify-content: center;   
-    gap: 15rem;
+    gap: 15rem;    
 }
 
 .sr-only {
@@ -52,6 +69,24 @@ button {
     padding: 0px;
     border: 0;
     appearance: none;
+}
+
+#display-mode {
+    position: absolute;
+    top: 6rem;
+    right: 6rem;
+}
+
+#display-mode button {
+    color: var(--btn-sound-simb-color);
+}
+
+#display-mode button:nth-child(1) {
+    font-size: 4.4rem;
+}
+
+#display-mode button:nth-child(2) {
+    font-size: 3.6rem;
 }
 
 #timer {
@@ -68,18 +103,19 @@ button {
 #timer-display {
     display: flex;
     font-size: 12.6rem;
+    color: var(--timer-color);
     gap: 0;
 }
 
 #timer-controls button {
     font-size: 4.8rem;
-    color: var(--txt-color);
+    color: var(--btn-timer-color);
     background-color: transparent;
     transition: 0.2s;  
 }
 
 #timer-controls button:hover {    
-    filter:opacity(60%);
+    filter:opacity(90%);
     transition: 0.2s;
 }
 
@@ -91,31 +127,30 @@ button {
     gap: 3.2rem;
     width: 30.8rem;
     height: 33.6rem;
+    margin: auto    
 }
 
 .sound-selector {
     display: grid;
     width: 13.8rem;
     height: 15.2rem;
+    padding: 2.4rem; 
+    gap: 3rem;   
+    place-content: center;
     border-radius: 2.4rem;
     background-color: var(--btn-sound-bg-color); 
-    transition: 0.3s; 
+    transition: 0.2s; 
 }
 
 .sound-selector:hover {
-    background-color: var(--btn-sound-bg-color-hover);
+    filter:contrast(70%);
     cursor: pointer;
-    transition: 0.3s;    
+    transition: 0.2s;    
 }
 
 .sound-selector button {
     font-size: 7rem; 
-    color: var(--btn-sound-simb-color);  
-}
-
-.sound-selector button:hover {
-    font-size: 7rem; 
-    color: white;  
+    color: var(--btn-sound-simb-color);
 }
 
 .selected-box {       
@@ -125,8 +160,21 @@ button {
 }
 
 .selected-button {
-    color: #ffffff;
+    color: var(--btn-sound-checked-simb-color);
 }
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+    outline: none;
+    border-radius: 2rem;
+    height: 0.4rem;
+    background: var(--btn-sound-simb-color);
+    accent-color: var(--btn-sound-simb-color)
+  }
 
 .hide {
     display: none;
@@ -135,7 +183,10 @@ button {
 @media(max-width: 900px) {
     #app {        
         flex-direction: column;
+        place-content: center;
+        padding-bottom: 2rem;
         gap: 3rem;
         ;
     }
+
 }

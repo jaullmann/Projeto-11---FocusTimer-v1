@@ -22,7 +22,7 @@ export class Sound {
     
     registerSoundActions = () => {
         this.section.addEventListener('click', (event) => {
-            const action = event.target.dataset.action
+            const action = event.target.dataset.action            
             console.log(`Ação painel de som executada: ${action}`)
             this.soundSelector(action)
             return                 
@@ -70,12 +70,12 @@ export class Sound {
             if (selectedSound == this.currentSong) {            
                 this.currentSong = null
                 currentSoundControl.classList.remove('selected-box')
-                currentSoundControl.querySelector('button').setAttribute('style', 'color: default')                       
+                this.switchSoundToggleColors(currentSoundControl, 'default')                  
             } else {
                 this.currentSong = selectedSound                              
                 this.untoggleAllBoxes()
                 currentSoundControl.classList.add('selected-box')
-                currentSoundControl.querySelector('button').setAttribute('style', 'color: white')              
+                this.switchSoundToggleColors(currentSoundControl, 'white')            
             }
             this.stopAllSounds()
             if (state.isRunning){
@@ -86,6 +86,12 @@ export class Sound {
         catch (TypeError) {
             //pass
         }    
+    }
+
+    switchSoundToggleColors = (soundControl, color) => {
+        soundControl.querySelector('button').setAttribute('style', `color: ${color}`)
+        soundControl.querySelector('input').setAttribute('style', `background: ${color}`)
+        soundControl.querySelector('input').setAttribute('style', `accent-color: ${color}`)
     }
 
     resetSoundElementColors = () => {
@@ -99,7 +105,7 @@ export class Sound {
         for(let element in this.controls){
             this.resetSoundElementColors()
             this.controls[element].classList.remove('selected-box')
-            this.controls[element].querySelector('button').setAttribute('style', 'color: default')
+            this.switchSoundToggleColors( this.controls[element], 'default')
         }
     }
 

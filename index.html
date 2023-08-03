@@ -1,22 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Temporizador web estilo contemporâneo">
   <title>Focus Timer Contemporâneo</title>
-
+  
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./src/main.js" defer></script>
 </head>
 <body>
+  <div id="display-mode">
+    <button
+      id="dark-mode-toggle"
+      data-action="toggleDarkMode"
+      class="ph ph-sun">
+      <span class="sr-only">Seletor para modo escuro</span>
+    </button> 
+    <button
+      id="light-mode-toggle"
+      data-action="toggleLightMode"
+      class="ph ph-moon hide">
+      <span class="sr-only">Seletor para modo claro</span>
+    </button>
+  </div>
+
   <div id="app">
 
     <section id="timer">
 
       <div 
-      id="timer-display">
+        id="timer-display">
         <span id="minutes">25</span>
         <span>:</span>
         <span id="seconds">00</span>
@@ -67,7 +86,11 @@
         data-action="toggleForestSound"
         class="ph ph-tree-evergreen">
           <span class="sr-only">Reproduzir som de floresta</span>
-        </button> 
+        </button>
+        <input 
+        type="range" class="volume-control" 
+        min="0" max="1" 
+        value="0.5" step="0.1"/> 
       </div>
 
       <div id="rain-box" class="sound-selector">
@@ -75,7 +98,11 @@
         data-action="toggleRainSound"
         class="ph ph-cloud-rain">
           <span class="sr-only">Reproduzir som de chuva</span>
-        </button> 
+        </button>
+        <input 
+        type="range" class="volume-control" 
+        min="0" max="1" 
+        value="0.5" step="0.1"/> 
       </div>
 
       <div id="coffeshop-box" class="sound-selector">
@@ -83,7 +110,11 @@
         data-action="toogleCoffeshopSound"
         class="ph ph-storefront">
           <span class="sr-only">Reproduzir som de cafeteria</span>
-        </button> 
+        </button>
+        <input 
+        type="range" class="volume-control" 
+        min="0" max="1" 
+        value="0.5" step="0.1"/>  
       </div>
 
       <div id="fireplace-box" class="sound-selector">
@@ -91,7 +122,11 @@
         data-action="toogleFireplaceSound"
         class="ph ph-campfire selected-sound-box">
           <span class="sr-only">Reproduzir som de lareira</span>
-        </button> 
+        </button>
+        <input 
+        type="range" class="volume-control" 
+        min="0" max="1" 
+        value="0.5" step="0.1"/>  
       </div>
 
     </section>    
