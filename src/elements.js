@@ -10,7 +10,14 @@ export const soundControls = {
     forestSoundSelector: document.getElementById("forest-box"),
     rainSoundSelector: document.getElementById("rain-box"),
     coffeshopSoundSelector: document.getElementById("coffeshop-box"),
-    fireplaceSoundSelector: document.getElementById("fireplace-box"),    
+    fireplaceSoundSelector: document.getElementById("fireplace-box")    
+}
+
+export const volumeControls = {
+    forestVolumeControl: document.getElementById("forest-vol-control"),
+    rainVolumeControl: document.getElementById("rain-vol-control"),
+    coffeshopVolumeControl: document.getElementById("coffeshop-vol-control"),
+    fireplaceVolumeControl: document.getElementById("fireplace-vol-control")
 }
 
 export const timerDisplay = {

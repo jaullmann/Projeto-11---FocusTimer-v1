@@ -189,4 +189,9 @@ input[type="range"] {
         ;
     }
 
+    #display-mode {        
+        top: 3rem;
+        right: 3rem;
+    }
+
 }

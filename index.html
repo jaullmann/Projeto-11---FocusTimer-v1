@@ -64,15 +64,15 @@
         </button>
 
         <button
-        data-action="volumeTurnUp"
+        data-action="timerIncrease"
         class="ph ph-plus-circle">
-          <span class="sr-only">Aumentar volume</span>
+          <span class="sr-only">Adicionar 5 minutos</span>
         </button>
 
         <button
-        data-action="volumeTurnDown"
+        data-action="timerDecrease"
         class="ph ph-minus-circle">
-          <span class="sr-only">Diminuir volume</span>            
+          <span class="sr-only">Diminuir 5 minutos</span>            
         </button>
 
       </div>      
@@ -88,7 +88,7 @@
           <span class="sr-only">Reproduzir som de floresta</span>
         </button>
         <input 
-        type="range" class="volume-control" 
+        type="range" class="volume-control" id="forest-vol-control"
         min="0" max="1" 
         value="0.5" step="0.1"/> 
       </div>
@@ -100,7 +100,7 @@
           <span class="sr-only">Reproduzir som de chuva</span>
         </button>
         <input 
-        type="range" class="volume-control" 
+        type="range" class="volume-control" id="rain-vol-control"
         min="0" max="1" 
         value="0.5" step="0.1"/> 
       </div>
@@ -112,7 +112,7 @@
           <span class="sr-only">Reproduzir som de cafeteria</span>
         </button>
         <input 
-        type="range" class="volume-control" 
+        type="range" class="volume-control" id="coffeshop-vol-control"
         min="0" max="1" 
         value="0.5" step="0.1"/>  
       </div>
@@ -124,7 +124,7 @@
           <span class="sr-only">Reproduzir som de lareira</span>
         </button>
         <input 
-        type="range" class="volume-control" 
+        type="range" class="volume-control" id="fireplace-vol-control"
         min="0" max="1" 
         value="0.5" step="0.1"/>  
       </div>

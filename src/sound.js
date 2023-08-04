@@ -6,49 +6,70 @@ export class Sound {
     constructor(
         soundSection = el.soundSection, 
         soundControls = el.soundControls,
+        volumeControls = el.volumeControls,
         soundFiles = aud.files,
-        timerControls = el.timerControls
+        timerControls = el.timerControls,
         ) {
             this.section = soundSection;
-            this.controls = soundControls;
+            this.soundControls = soundControls;
+            this.volumeControls = volumeControls;
             this.forestSelector = soundControls.forestSoundSelector;
             this.rainSelector = soundControls.rainSoundSelector;
             this.coffeshopSelector = soundControls.coffeshopSoundSelector;
             this.fireplaceSelector = soundControls.fireplaceSoundSelector;
-            this.timerControls = timerControls;
-            this.soundFiles = soundFiles;
-            this.currentSong = null            
+            this.timerControls = timerControls.controlsPanel;
+            this.soundFiles = soundFiles;           
+            this.isPlaying = false;
+            this.currentSelector = null;
+            this.currentSong = null      
         }           
     
     registerSoundActions = () => {
         this.section.addEventListener('click', (event) => {
-            const action = event.target.dataset.action            
-            console.log(`Ação painel de som executada: ${action}`)
-            this.soundSelector(action)
-            return                 
+            const action = event.target.dataset.action
+            if (action != undefined) {
+                console.log(`Ação painel de som executada: ${action}`)
+                this.soundSelector(action)                
+                return
+            }                     
         })
-        document.addEventListener('timeUp', (event) => {
+    }
+
+    registerTimerActions = () => {
+        this.timerControls.addEventListener('click', (event) => {
+            const action = event.target.dataset.action
+            if(typeof this[action] != "function") {
+                return                               
+            }
+            this[action]()
+            console.log(`Ação sound.js selecionada: ${action}`) 
+            return
+        }) 
+    }
+    
+    captureTimeUpEvent = () => {
+        document.addEventListener('timeUp', () => {
             this.stopAllSounds()
             this.untoggleAllBoxes()
         })        
     }
 
-    registerTimerActions = () => {
-        this.timerControls.controlsPanel.addEventListener('click', (event) => {
-            const action = event.target.dataset.action
-            if(typeof this[action] != "function") {
-                return
-            }
-            this[action]()
-            console.log(`Ação selecionada: ${action}`)
-            return   
+    setVolumeControls = () => {
+        this.volumeControls.forestVolumeControl.addEventListener('change', () => {
+            this.soundFiles.forestSound.volume = this.volumeControls.forestVolumeControl.value
+        })
+        this.volumeControls.rainVolumeControl.addEventListener('change', () => {
+            this.soundFiles.rainSound.volume = this.volumeControls.rainVolumeControl.value
+        })
+        this.volumeControls.coffeshopVolumeControl.addEventListener('change', () => {
+            this.soundFiles.coffeshopSound.volume = this.volumeControls.coffeshopVolumeControl.value
+        })
+        this.volumeControls.fireplaceVolumeControl.addEventListener('change', () => {
+            this.soundFiles.fireplaceSound.volume = this.volumeControls.fireplaceVolumeControl.value
         })
     }
 
-    soundSelector = (soundPanelAction) => {
-        if (soundPanelAction == undefined) {
-            return
-        }                
+    soundSelector = (soundPanelAction) => {              
         switch(soundPanelAction) {
             case 'toggleForestSound':
                 this.toggleSoundSelected(this.soundFiles.forestSound, this.forestSelector)
@@ -63,29 +84,41 @@ export class Sound {
                 this.toggleSoundSelected(this.soundFiles.fireplaceSound, this.fireplaceSelector)
                 break            
         }
+        return
     }
      
-    toggleSoundSelected = (selectedSound, currentSoundControl) => {        
-        try {
-            if (selectedSound == this.currentSong) {            
-                this.currentSong = null
-                currentSoundControl.classList.remove('selected-box')
-                this.switchSoundToggleColors(currentSoundControl, 'default')                  
-            } else {
-                this.currentSong = selectedSound                              
-                this.untoggleAllBoxes()
+    toggleSoundSelected = (selectedSound, currentSoundControl) => {
+        try{
+            if (this.currentSong == null) {
+                this.currentSong = selectedSound
                 currentSoundControl.classList.add('selected-box')
-                this.switchSoundToggleColors(currentSoundControl, 'white')            
-            }
-            this.stopAllSounds()
-            if (state.isRunning){
-                this.currentSong.play()
-            }
-            
-        }
-        catch (TypeError) {
+            } else if (this.currentSong == selectedSound) {
+                if (state.isRunning) {
+                    if (this.isPlaying) {
+                        this.currentSong.pause()
+                        this.isPlaying = false
+                        currentSoundControl.classList.remove('selected-box')
+                    } else {
+                        this.currentSong.play()
+                        this.isPlaying = true
+                        currentSoundControl.classList.add('selected-box')
+                    }                      
+                } else {
+                    currentSoundControl.classList.toggle('selected-box')
+                }                
+            } else {
+                this.stopAllSounds()
+                this.untoggleAllBoxes()
+                this.currentSong = selectedSound
+                if (state.isRunning) {
+                    this.currentSong.play()
+                    currentSoundControl.classList.add('selected-box')                    
+                } 
+            } 
+            return
+        } catch(TypeError) {
             //pass
-        }    
+        }     
     }
 
     switchSoundToggleColors = (soundControl, color) => {
@@ -95,25 +128,25 @@ export class Sound {
     }
 
     resetSoundElementColors = () => {
-        for(let element in this.controls){
-            this.controls[element].classList.remove('selected-box')
+        for(let element in this.soundControls){
+            this.soundControls[element].classList.remove('selected-box')
             
         }
     }
 
     untoggleAllBoxes = () => {
-        for(let element in this.controls){
+        for(let element in this.soundControls){
             this.resetSoundElementColors()
-            this.controls[element].classList.remove('selected-box')
-            this.switchSoundToggleColors( this.controls[element], 'default')
+            this.soundControls[element].classList.remove('selected-box')
+            this.switchSoundToggleColors(this.soundControls[element], 'default')
         }
     }
 
     timerPlay = () => {
-        try {
-            this.currentSong.play()  
+        try {                        
+            this.currentSong.play() 
         }
-        catch (TypeError) {
+        catch (TypeError) {            
             //pass
         }
     }
@@ -131,33 +164,17 @@ export class Sound {
     }   
 
     timerPause = () => {
+        this.isPlaying = false
         try {
             this.currentSong.pause()            
         }
         catch (TypeError) {
             //pass
         }
-    }
-
-    volumeTurnUp = () => {
-        try {
-            this.currentSong.volume = this.currentSong.volume+0.1    
-        }
-        catch (DOMException) {
-            //pass
-        }
-    }
-
-    volumeTurnDown = () => {
-        try {
-            this.currentSong.volume = this.currentSong.volume-0.1    
-        }
-        catch (DOMException) {
-            //pass
-        }
-    }
+    }    
 
     stopAllSounds = () => {
+        this.isPlaying = false
         for(let sound in this.soundFiles){
             this.soundFiles[sound].pause()
             this.soundFiles[sound].currentTime = 0
@@ -165,3 +182,5 @@ export class Sound {
         return
     }
 }
+
+

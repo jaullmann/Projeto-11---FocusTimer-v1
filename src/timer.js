@@ -29,7 +29,7 @@ export class Timer {
                 return
             }
             this[action]()
-            console.log(`Ação selecionada: ${action}`)
+            console.log(`Ação timer.js selecionada: ${action}`)
             return                   
         })
         this.timerDisplay.addEventListener('click', (event) => {
@@ -118,7 +118,19 @@ export class Timer {
         this.pauseButton.classList.add('hide')        
         this.timerReset()
         return        
-    }   
+    } 
+    
+    timerIncrease = () => {
+        const maxTimeAllowed = state.isRunning ? 59 : 60
+        this.currentMinute = this.currentMinute + 5 > maxTimeAllowed ? maxTimeAllowed : this.currentMinute + 5
+        this.updateDisplay()
+    }
+
+    timerDecrease = () => {
+        const minTimeAllowed = state.isRunning ? 0 : 5
+        this.currentMinute = this.currentMinute - 5 < minTimeAllowed ? minTimeAllowed : this.currentMinute - 5
+        this.updateDisplay()
+    }
     
     timerReset = () => {
         this.currentMinute = state.minutes
