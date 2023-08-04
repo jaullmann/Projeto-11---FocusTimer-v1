@@ -19,8 +19,7 @@ export class Sound {
             this.fireplaceSelector = soundControls.fireplaceSoundSelector;
             this.timerControls = timerControls.controlsPanel;
             this.soundFiles = soundFiles;           
-            this.isPlaying = false;
-            this.currentSelector = null;
+            this.isPlaying = false;            
             this.currentSong = null      
         }           
     
@@ -87,38 +86,40 @@ export class Sound {
         return
     }
      
-    toggleSoundSelected = (selectedSound, currentSoundControl) => {
-        try{
-            if (this.currentSong == null) {
-                this.currentSong = selectedSound
-                currentSoundControl.classList.add('selected-box')
-            } else if (this.currentSong == selectedSound) {
-                if (state.isRunning) {
-                    if (this.isPlaying) {
-                        this.currentSong.pause()
-                        this.isPlaying = false
-                        currentSoundControl.classList.remove('selected-box')
-                    } else {
-                        this.currentSong.play()
-                        this.isPlaying = true
-                        currentSoundControl.classList.add('selected-box')
-                    }                      
-                } else {
-                    currentSoundControl.classList.toggle('selected-box')
-                }                
-            } else {
-                this.stopAllSounds()
-                this.untoggleAllBoxes()
-                this.currentSong = selectedSound
-                if (state.isRunning) {
-                    this.currentSong.play()
-                    currentSoundControl.classList.add('selected-box')                    
-                } 
-            } 
-            return
-        } catch(TypeError) {
-            //pass
-        }     
+    toggleSoundSelected = (selectedSound, currentSoundControl) => {        
+        if (this.currentSong == null) {
+            this.currentSong = selectedSound
+            currentSoundControl.classList.add('selected-box')
+            this.playPauseCurrentSong()
+        } else if (this.currentSong == selectedSound && (state.isRunning || state.isOver)) {                              
+            this.playPauseCurrentSong()
+            this.currentSong = null             
+            currentSoundControl.classList.remove('selected-box')
+        } else if (this.currentSong == selectedSound && state.isRunning){
+            this.playPauseCurrentSong()
+            currentSoundControl.classList.toogle('selected-box')
+        } else {
+            this.untoggleAllBoxes()
+            this.stopAllSounds()
+            this.currentSong = selectedSound
+            this.playPauseCurrentSong()
+            currentSoundControl.classList.add('selected-box')
+        }        
+    }
+
+    playPauseCurrentSong = () => {
+        if (state.isRunning) {
+            if (this.isPlaying) {
+                this.currentSong.pause()
+                this.isPlaying = false
+            }
+            else {
+                this.currentSong.play()
+                this.isPlaying = true
+            }
+        } else {
+            this.isPlaying = false
+        }      
     }
 
     switchSoundToggleColors = (soundControl, color) => {
