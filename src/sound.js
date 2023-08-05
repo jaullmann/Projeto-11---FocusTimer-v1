@@ -20,7 +20,8 @@ export class Sound {
             this.timerControls = timerControls.controlsPanel;
             this.soundFiles = soundFiles;           
             this.isPlaying = false;            
-            this.currentSong = null      
+            this.currentSong = null;
+            this.currentSongControl = null     
         }           
     
     registerSoundActions = () => {
@@ -49,7 +50,7 @@ export class Sound {
     captureTimeUpEvent = () => {
         document.addEventListener('timeUp', () => {
             this.stopAllSounds()
-            this.untoggleAllBoxes()
+            this.toggleSoundSelectorColor('unselectAll')
         })        
     }
 
@@ -71,40 +72,73 @@ export class Sound {
     soundSelector = (soundPanelAction) => {              
         switch(soundPanelAction) {
             case 'toggleForestSound':
-                this.toggleSoundSelected(this.soundFiles.forestSound, this.forestSelector)
+                this.currentSongControl = this.forestSelector
+                this.toggleSoundSelected(this.soundFiles.forestSound)
                 break
             case 'toggleRainSound':
-                this.toggleSoundSelected(this.soundFiles.rainSound, this.rainSelector)
+                this.currentSongControl = this.rainSelector
+                this.toggleSoundSelected(this.soundFiles.rainSound)
                 break
             case 'toogleCoffeshopSound':
-                this.toggleSoundSelected(this.soundFiles.coffeshopSound, this.coffeshopSelector)
+                this.currentSongControl = this.coffeshopSelector
+                this.toggleSoundSelected(this.soundFiles.coffeshopSound)
                 break
             case 'toogleFireplaceSound':
-                this.toggleSoundSelected(this.soundFiles.fireplaceSound, this.fireplaceSelector)
+                this.currentSongControl = this.fireplaceSelector
+                this.toggleSoundSelected(this.soundFiles.fireplaceSound)
                 break            
         }
         return
     }
      
-    toggleSoundSelected = (selectedSound, currentSoundControl) => {        
+    toggleSoundSelected = (selectedSound) => {        
         if (this.currentSong == null) {
             this.currentSong = selectedSound
-            currentSoundControl.classList.add('selected-box')
+            this.toggleSoundSelectorColor('select')
             this.playPauseCurrentSong()
         } else if (this.currentSong == selectedSound && (state.isRunning || state.isOver)) {                              
             this.playPauseCurrentSong()
-            this.currentSong = null             
-            currentSoundControl.classList.remove('selected-box')
+            this.currentSong = null       
+            this.toggleSoundSelectorColor('unselect')
         } else if (this.currentSong == selectedSound && state.isRunning){
             this.playPauseCurrentSong()
-            currentSoundControl.classList.toogle('selected-box')
+            this.toggleSoundSelectorColor('toggle')
         } else {
-            this.untoggleAllBoxes()
+            this.toggleSoundSelectorColor('unselectAll')
             this.stopAllSounds()
             this.currentSong = selectedSound
             this.playPauseCurrentSong()
-            currentSoundControl.classList.add('selected-box')
+            this.toggleSoundSelectorColor('select')
         }        
+    }
+
+    toggleSoundSelectorColor = (actionType) => {
+        const currentButtonControl = this.currentSongControl.querySelector(".ph-button")
+        const currentSliderControl = this.currentSongControl.querySelector("input")        
+        switch (actionType) {
+            case 'select':
+                this.currentSongControl.classList.add('selected-box')
+                currentButtonControl.classList.add('selected-button')
+                currentSliderControl.classList.add('selected-slider')
+                return
+            case 'unselect':
+                this.currentSongControl.classList.remove('selected-box')
+                currentButtonControl.classList.remove('selected-button')
+                currentSliderControl.classList.remove('selected-slider')
+                return
+            case 'toggle':
+                this.currentSongControl.classList.toggle('selected-box')
+                currentButtonControl.classList.toggle('selected-button')
+                currentSliderControl.classList.toggle('selected-slider')
+                return
+            case 'unselectAll':
+                for(let element in this.soundControls){
+                    this.soundControls[element].classList.remove('selected-box')
+                    this.soundControls[element].querySelector("button").classList.remove('selected-button')
+                    this.soundControls[element].querySelector("input").classList.remove('selected-slider')
+                }
+                return
+        }
     }
 
     playPauseCurrentSong = () => {
@@ -122,27 +156,6 @@ export class Sound {
         }      
     }
 
-    switchSoundToggleColors = (soundControl, color) => {
-        soundControl.querySelector('button').setAttribute('style', `color: ${color}`)
-        soundControl.querySelector('input').setAttribute('style', `background: ${color}`)
-        soundControl.querySelector('input').setAttribute('style', `accent-color: ${color}`)
-    }
-
-    resetSoundElementColors = () => {
-        for(let element in this.soundControls){
-            this.soundControls[element].classList.remove('selected-box')
-            
-        }
-    }
-
-    untoggleAllBoxes = () => {
-        for(let element in this.soundControls){
-            this.resetSoundElementColors()
-            this.soundControls[element].classList.remove('selected-box')
-            this.switchSoundToggleColors(this.soundControls[element], 'default')
-        }
-    }
-
     timerPlay = () => {
         try {                        
             this.currentSong.play() 
@@ -155,7 +168,7 @@ export class Sound {
     timerStop = () => {
         try {
             this.stopAllSounds()
-            this.untoggleAllBoxes()
+            this.toggleSoundSelectorColor('unselectAll')
             this.currentSong = null
             return
         } 

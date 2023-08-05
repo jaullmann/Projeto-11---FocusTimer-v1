@@ -1,4 +1,5 @@
 import { darkModeToggle as dm} from "./elements.js";
+import state from "./state.js"
 
 export class Theme {
     constructor(
@@ -14,11 +15,13 @@ export class Theme {
     toggleDarkMode = () => {
         document.body.classList.add('dark-mode')
         this.switchDarkModeButtons()
+        state.isDarkMode = !state.isDarkMode
     }
 
     toggleLightMode = () => {
         document.body.classList.remove('dark-mode')
         this.switchDarkModeButtons()
+        state.isDarkMode = !state.isDarkMode
     }
 
     switchDarkModeButtons = () => {

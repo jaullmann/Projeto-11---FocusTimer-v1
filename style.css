@@ -17,6 +17,7 @@
     --btn-sound-checked-bg-color: #02799D;
     --btn-sound-checked-simb-color: #ffffff;
     --btn-sound-slider-color: #323238;
+    --btn-sound-checked-slider-color: #ffffff;
     --btn-toggle-mode-display: #000000;
     font-size: clamp(40%, 1% + 2vw, 62.5%);
     font-family: 'Roboto', sans-serif;    
@@ -32,6 +33,7 @@
     --btn-sound-checked-bg-color: #0A3442;
     --btn-sound-checked-simb-color: #FFFFFF;
     --btn-sound-slider-color: #FFFFFF;
+    --btn-sound-checked-slider-color: #ffffff;
     --btn-toggle-mode-display: #FFFFFF;
     transition: 0.3s;
 }
@@ -143,38 +145,14 @@ button {
 }
 
 .sound-selector:hover {
-    filter:contrast(70%);
-    cursor: pointer;
+    filter:contrast(70%);    
     transition: 0.2s;    
 }
 
-.sound-selector button {
+.ph-button {
     font-size: 7rem; 
     color: var(--btn-sound-simb-color);
 }
-
-.selected-box {       
-    border-radius: 2.4rem;
-    color: var(--btn-sound-checked-simb-color);
-    background-color: var(--btn-sound-checked-bg-color);       
-}
-
-.selected-button {
-    color: var(--btn-sound-checked-simb-color);
-}
-
-/* input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    margin-bottom: 0.8rem;
-    cursor: pointer;
-    outline: none;
-    border-radius: 2rem;
-    height: 0.4rem;
-    background: var(--btn-sound-simb-color);
-    accent-color: var(--btn-sound-simb-color)
-  } */
 
 input {
     -webkit-appearance: none;
@@ -195,13 +173,44 @@ input::-webkit-slider-thumb {
     height: 16px;
     background: var(--btn-sound-slider-color); 
     cursor: pointer;
-    border-radius: 50%; 
+    border-radius: 50%;
 }
 
 input::-moz-range-thumb {
     width: 25px;
     height: 25px;
     background: var(--btn-sound-slider-color);
+    cursor: pointer;
+}
+
+.selected-box {       
+    border-radius: 2.4rem;
+    color: var(--btn-sound-checked-simb-color);
+    background-color: var(--btn-sound-checked-bg-color);       
+}
+
+.selected-button {
+    color: var(--btn-sound-checked-simb-color);
+}
+
+.selected-slider {
+    -webkit-appearance: none;
+    background: var(--btn-sound-checked-slider-color);
+    outline: none;
+    opacity: 1;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.selected-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: var(--btn-sound-checked-slider-color); 
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.selected-slider::-moz-range-thumb {
+    background: var(--btn-sound-checked-slider-color);
     cursor: pointer;
 }
 
